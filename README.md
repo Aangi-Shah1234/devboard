@@ -19,14 +19,16 @@ build a big product. There is no login and no cache.
 | Secrets | AWS Secrets Manager + External Secrets Operator, Pod Identity |
 | Observability | OpenTelemetry Collector, Tempo, Loki, Prometheus, Grafana |
 
-## What I Did (Deployment Summary)
+## What I Did (Deployed Using Antigravity)
 
-1. **Local Setup (Docker Compose):** Cloned the project, configured `.env`, and ran the full app locally (React frontend, Go backend, PostgreSQL, and Nginx gateway) to test how the services work together.
+I set up and ran this project using **Antigravity** to learn and understand how a full cloud-native DevOps architecture works end-to-end in simple terms:
+
+1. **Local Setup (Docker Compose):** Ran the app locally (React frontend, Go backend, PostgreSQL, and Nginx gateway) to see how the services talk to each other.
 2. **AWS EKS Deployment (`us-east-1` / N. Virginia):**
    - Forked the repository so **Argo CD** could sync Kubernetes manifests from GitHub.
-   - Provisioned **Amazon S3** (Terraform state), **Amazon VPC**, **Amazon EKS**, **EC2** (`m7i-flex.large` Free Tier–eligible worker nodes), **EBS** storage, and **AWS Secrets Manager** (via Terraform).
-   - Deployed **Envoy Gateway** (AWS Classic ELB), **External Secrets Operator**, **Argo CD** (GitOps), **Ollama** (`llama3.2:1b` AI model), and the **Observability stack** (OpenTelemetry, Prometheus, Loki, Tempo, Grafana).
-3. **Verification & Teardown:** Tested the live public app, AI Assistant, and Grafana/Argo CD dashboards, then tore down all AWS resources cleanly using `cluster-down.sh`.
+   - Deployed the infrastructure using **Terraform** (S3 state bucket, VPC, EKS cluster, `m7i-flex.large` EC2 worker nodes, EBS storage, and AWS Secrets Manager).
+   - Explored **Envoy Gateway** (AWS Classic ELB), **External Secrets Operator**, **Argo CD** (GitOps), **Ollama** (`llama3.2:1b` AI model), and the **Observability stack** (OpenTelemetry, Prometheus, Loki, Tempo, Grafana).
+3. **Verification & Teardown:** Verified the live app, AI Assistant, and Grafana/Argo CD dashboards, understood each component's role, and cleaned up all AWS resources with `cluster-down.sh`.
 
 ### Screenshots
 
