@@ -19,6 +19,26 @@ build a big product. There is no login and no cache.
 | Secrets | AWS Secrets Manager + External Secrets Operator, Pod Identity |
 | Observability | OpenTelemetry Collector, Tempo, Loki, Prometheus, Grafana |
 
+## What I Did (Deployment Summary)
+
+1. **Local Setup (Docker Compose):** Cloned the project, configured `.env`, and ran the full app locally (React frontend, Go backend, PostgreSQL, and Nginx gateway) to test how the services work together.
+2. **AWS EKS Deployment (`us-east-1` / N. Virginia):**
+   - Forked the repository so **Argo CD** could sync Kubernetes manifests from GitHub.
+   - Provisioned **Amazon S3** (Terraform state), **Amazon VPC**, **Amazon EKS**, **EC2** (`m7i-flex.large` Free Tier–eligible worker nodes), **EBS** storage, and **AWS Secrets Manager** (via Terraform).
+   - Deployed **Envoy Gateway** (AWS Classic ELB), **External Secrets Operator**, **Argo CD** (GitOps), **Ollama** (`llama3.2:1b` AI model), and the **Observability stack** (OpenTelemetry, Prometheus, Loki, Tempo, Grafana).
+3. **Verification & Teardown:** Tested the live public app, AI Assistant, and Grafana/Argo CD dashboards, then tore down all AWS resources cleanly using `cluster-down.sh`.
+
+### Screenshots
+
+**DevBoard Dashboard Live on AWS EKS (ELB)**
+![DevBoard Dashboard on AWS](docs/screenshots/aws-dashboard.jpg)
+
+**AI Assistant Answering Live via Self-Hosted Ollama (`llama3.2:1b`)**
+![DevBoard AI Assistant on AWS](docs/screenshots/aws-ai-assistant.jpg)
+
+**Grafana Observability Dashboard (`DevBoard AI — RED`)**
+![Grafana Observability Dashboard](docs/screenshots/grafana-ai-red.jpg)
+
 ## Architecture
 
 ![DevBoard architecture: build and ship, platform, runtime on EKS, observe](docs/architecture.png)
